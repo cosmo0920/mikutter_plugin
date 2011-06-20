@@ -20,8 +20,8 @@ Module.new do
       main.favorite(fav_by, messages)
  }
   plugin.add_event(:unfavorite){ |service, unfav_by, messages|
-	  main.add(messages)
-	  main.unfavorite(unfav_by,messages)
-  }
+      main.add(messages)
+      main.unfavorite(unfav_by,messages)
+ }
 
 end
