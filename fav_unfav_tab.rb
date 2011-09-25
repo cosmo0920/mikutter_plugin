@@ -11,9 +11,6 @@ Module.new do
   plugin = Plugin::create(:fav_unfav_tab)
   plugin.add_event(:boot){ |service|
     Plugin.call(:mui_tab_regist, main, 'Fav/Unfav', image)
-    # Gtk::TimeLine.addwidgetrule(/@([a-zA-Z0-9_]+)/){ |text|
-    #   user = User.findbyidname(text[1, text.size])
-    #   Gtk::WebIcon.new(user[:profile_image_url], 12, 12) if user }
   }
   plugin.add_event(:favorite){ |service, fav_by, messages|
       main.add(messages)
