@@ -23,7 +23,9 @@ Module.new do
     main.favorite(fav_by, messages)
     if command_exist? "notify-send"
       SerialThread.new {
-        bg_system("notify-send","fav_by:#{fav_by}","#{messages.user.idname}:#{messages}","-i",Gtk::WebIcon.local_path(messages.user[:profile_image_url]))
+        bg_system("notify-send","fav_by:#{fav_by}",
+				  "#{messages.user.idname}:#{messages}","-i",
+				  Gtk::WebIcon.local_path(messages.user[:profile_image_url]))
 	  }
     end
   }
@@ -32,7 +34,9 @@ Module.new do
     main.unfavorite(unfav_by,messages)
     if command_exist? "notify-send"
       SerialThread.new {
-        bg_system("notify-send","unfav_by:#{unfav_by}","#{messages.user.idname}:#{messages}","-i",Gtk::WebIcon.local_path(messages.user[:profile_image_url]))
+        bg_system("notify-send","unfav_by:#{unfav_by}",
+				  "#{messages.user.idname}:#{messages}","-i",
+				  Gtk::WebIcon.local_path(messages.user[:profile_image_url]))
 	  }
     end
   }
