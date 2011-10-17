@@ -23,7 +23,7 @@ Module.new do
   plugin.add_event(:favorite){ |service, fav_by, messages|
     main.add(messages)
     main.favorite(fav_by, messages)
-    if command_exist? "notify-send" && is_notify_favorited then
+    if command_exist? "notify-send" || is_notify_favorited then
       SerialThread.new {
         bg_system("notify-send","fav_by:#{fav_by}",
 				  "#{messages.user.idname}:#{messages}","-i",
@@ -34,7 +34,7 @@ Module.new do
   plugin.add_event(:unfavorite){ |service, unfav_by, messages|
     main.add(messages)
     main.unfavorite(unfav_by,messages)
-    if command_exist? "notify-send" && is_notify_unfavorited then
+    if command_exist? "notify-send" || is_notify_unfavorited then
       SerialThread.new {
         bg_system("notify-send","unfav_by:#{unfav_by}",
 				  "#{messages.user.idname}:#{messages}","-i",
