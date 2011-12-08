@@ -25,9 +25,10 @@ Module.new do
     main.favorite(fav_by, messages)
     if command_exist? "notify-send" || is_notify_favorited then
       SerialThread.new {
+        #userでは無くgetでfav_byの人のアイコンを取得
         bg_system("notify-send","fav_by:#{fav_by}",
 				  "#{messages.user.idname}:#{messages}","-i",
-				  Gtk::WebIcon.local_path(messages.user[:profile_image_url]))
+				  Gtk::WebIcon.local_path(fav_by.get(:profile_image_url,-1)))
 	  }
     end
   }
@@ -36,9 +37,10 @@ Module.new do
     main.unfavorite(unfav_by,messages)
     if command_exist? "notify-send" || is_notify_unfavorited then
       SerialThread.new {
+        #userでは無くgetでunfav_byの人のアイコンを取得
         bg_system("notify-send","unfav_by:#{unfav_by}",
 				  "#{messages.user.idname}:#{messages}","-i",
-				  Gtk::WebIcon.local_path(messages.user[:profile_image_url]))
+				  Gtk::WebIcon.local_path(unfav_by.get(:profile_image_url,-1)))
 	  }
     end
   }
