@@ -22,8 +22,10 @@ Module.new do
     Plugin.call(:mui_tab_regist, main, 'Fav/Unfav', image)
   }
   plugin.add_event(:favorite){ |service, fav_by, messages|
-    main.add(messages)
-    main.favorite(fav_by, messages)
+    Delayer.new{
+      main.add(messages)
+      main.favorite(fav_by, messages)
+    }
     if command_exist? "notify-send" || UserConfig[:is_notify_favorited] then
       SerialThread.new {
         #自分(Post.primary_service.user)がふぁぼした時には通知しないよ
@@ -37,8 +39,10 @@ Module.new do
     end
   }
   plugin.add_event(:unfavorite){ |service, unfav_by, messages|
-    main.add(messages)
-    main.unfavorite(unfav_by,messages)
+    Delayer.new{
+      main.add(messages)
+      main.unfavorite(unfav_by,messages)
+    }
     if command_exist? "notify-send" || UserConfig[:is_notify_unfavorited] then
       SerialThread.new {
         #自分(Post.primary_service.user)があんふぁぼした時には通知しないよ
@@ -51,5 +55,4 @@ Module.new do
       }
     end
   }
-  
 end
