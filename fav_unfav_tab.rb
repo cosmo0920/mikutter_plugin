@@ -13,8 +13,9 @@ $sudo apt-get install libnotify-bin
 Module.new do
   main = Gtk::TimeLine.new()
   image = Gtk::Image.new(Gdk::Pixbuf.new(MUI::Skin.get("fav.png"), 24,24))
-  is_notify_favorited = true
-  is_notify_unfavorited = true
+  #M-xで出てくるコンソールで通知するかしないか変更できるよ
+  UserConfig[:is_notify_favorited] = true
+  UserConfig[:is_notify_unfavorited] = true
   
   plugin = Plugin::create(:fav_unfav_tab)
   plugin.add_event(:boot){ |service|
@@ -23,7 +24,7 @@ Module.new do
   plugin.add_event(:favorite){ |service, fav_by, messages|
     main.add(messages)
     main.favorite(fav_by, messages)
-    if command_exist? "notify-send" || is_notify_favorited then
+    if command_exist? "notify-send" || UserConfig[:is_notify_favorited] then
       SerialThread.new {
         #自分(Post.primary_service.user)がふぁぼした時には通知しないよ
         if !(fav_by.to_s == Post.primary_service.user.to_s) then
@@ -38,7 +39,7 @@ Module.new do
   plugin.add_event(:unfavorite){ |service, unfav_by, messages|
     main.add(messages)
     main.unfavorite(unfav_by,messages)
-    if command_exist? "notify-send" || is_notify_unfavorited then
+    if command_exist? "notify-send" || UserConfig[:is_notify_unfavorited] then
       SerialThread.new {
         #自分(Post.primary_service.user)があんふぁぼした時には通知しないよ
         if !(unfav_by.to_s == Post.primary_service.user.to_s) then
