@@ -33,7 +33,7 @@ Module.new do
           #userでは無くgetでfav_byの人のアイコンを取得
           bg_system("notify-send","fav_by:#{fav_by}",
                     "#{messages.user.idname}:#{messages}","-i",
-                    Gtk::WebIcon.local_path(fav_by.get(:profile_image_url,-1)))
+                    Gdk::WebImageLoader.local_path(fav_by.get(:profile_image_url,-1)))
         end
       }
     end
@@ -50,7 +50,7 @@ Module.new do
           #userでは無くgetでunfav_byの人のアイコンを取得
           bg_system("notify-send","unfav_by:#{unfav_by}",
                     "#{messages.user.idname}:#{messages}","-i",
-                    Gtk::WebIcon.local_path(unfav_by.get(:profile_image_url,-1)))
+                    Gdk::WebImageLoader.local_path(unfav_by.get(:profile_image_url,-1)))
         end
       }
     end
